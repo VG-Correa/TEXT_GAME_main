@@ -1,7 +1,7 @@
 import random
 
 class Rolagem:
-    def __init__(self, nome_dado):
+    def __init__(self, nome_dado: str):
         self.dado = nome_dado
         self.rolagem: int = None
         self.modificador: int = None
@@ -41,18 +41,18 @@ class Rolagem:
         
     def __str__(self) -> str:
         sinal = "+" if self.modificador >= 0 else ""
-        return f"{self.dado}: {self.rolagem}({sinal}{self.modificador}) = {self.resultado} | {self.sobra}"
+        return f"{self.dado:<4}: {self.rolagem:<3}({sinal:}{self.modificador:^3}) = {self.resultado:<3} | {self.sobra:<3}"
 
 class Dado:
     def __init__(self, lados: int, nome: str):
-        self.nome = nome
+        self.nome: str = nome
         self.lados: int = lados
     
-    def lancar(self, quantidade: int =1, modificador:int = 0) -> list[Rolagem]:
-        resultados_rolagens: list = []
+    def lancar(self, quantidade: int = 1, modificador:int = 0) -> list[Rolagem]:
+        resultados_rolagens: list[Rolagem] = []
         
         for i in range(quantidade):
-            rolagem = Rolagem(self.nome)
+            rolagem = Rolagem(nome_dado=self.nome)
             rolagem.rolar(self.lados,modificador)
             
             resultados_rolagens.append(rolagem)
@@ -61,24 +61,24 @@ class Dado:
 
 class D4(Dado):
     def __init__(self):
-        super().__init__(4,'D4')
+        super().__init__(4,"D4")
 
 class D6(Dado):
     def __init__(self):
-        super().__init__(6,'D6')
+        super().__init__(6,"D6")
 
 class D8(Dado):
     def __init__(self):
-        super().__init__(8,'D8')
+        super().__init__(8,"D8")
 
 class D10(Dado):
     def __init__(self):
-        super().__init__(10,'D10')
+        super().__init__(10,"D10")
 
 class D12(Dado):
     def __init__(self):
-        super().__init__(12,'D12')
+        super().__init__(12,"D12")
 
 class D20(Dado):
     def __init__(self):
-        super().__init__(20,'D20')
+        super().__init__(20,"D20")

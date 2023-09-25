@@ -1,5 +1,11 @@
 import platform
 
+if platform.system() == "Windows": 
+    from .windows.windows_terminal_controller import *
+else:
+    from menu_terminal.linux.linux_terminal_controller import Linux_TerminalController
+
+
 class Os_Terminal_Controller:
         
     def __init__(self):
@@ -12,12 +18,10 @@ class Os_Terminal_Controller:
     
     def Set_terminal(self):
         if self.sysOp == "Windows":
-            from menu_terminal.windows import windows_terminal_controller
-            self.terminal = windows_terminal_controller.Windows_TerminalController()
+            self.terminal =  Windows_TerminalController()
             
         elif self.sysOp == "Linux":
-            from linux import linux_terminal_controller
-            self.terminal = linux_terminal_controller.Linux_TerminalController()
+            self.terminal = Linux_TerminalController()
             
     def ReadKey(self):
         return self.terminal.key()

@@ -1,9 +1,9 @@
 import sys
 import os
 import time
-from menu_terminal import os_terminal_controller as ostc
+from .os_terminal_controller import Os_Terminal_Controller
 
-TERMINAL = ostc.Os_Terminal_Controller()
+TERMINAL = Os_Terminal_Controller()
         
 class Menu_select:
     def __init__(self,cabeçalho,

@@ -1,14 +1,52 @@
 CONFIG_RACAS = {
     
     "Humano": {
+
         "Modificadores_atributos":
             {   
-                'forca': 0,
-                'destreza': 0,
-                'constituicao': 0,
-                'inteligencia': 0,
-                'sabedoria': 0,
-                'carisma': 0,
+                
+                'forca_base': 2,
+                'destreza_base': 0,
+                'constituicao_base': 0,
+                'inteligencia_base': 0,
+                'sabedoria_base': 0,
+                'carisma_base': 0,
+            },
+        "Modificadores_proficiencia":
+            {
+                "Armas": 
+                    {
+                        "arma_teste": 0,
+                    },
+                "Vestimentas":
+                    {
+                        "vestimenta_teste": 0,
+                    },
+                "Itens":
+                    {
+                        "item_teste": 0,
+                    }
+            }
+    }
+    
+    
+    
+    
+}
+
+CONFIG_CLASSES = {
+    
+    "Guerreiro": {
+
+        "Modificadores_atributos":
+            {   
+                
+                'forca_base': 2,
+                'destreza_base': 0,
+                'constituicao_base': 2,
+                'inteligencia_base': 0,
+                'sabedoria_base': 0,
+                'carisma_base': 0,
             },
         "Modificadores_proficiencia":
             {
