@@ -28,25 +28,37 @@ class Personagem:
 
     def Start_Personagem(self, funcao_atributo):
         
-        opcoes = self.Rolar_base()
+        valores = self.Rolar_base()
         
-        forca = opcoes[funcao_atributo(opcoes)]
-        self.forca =        Forca(valor=funcao_atributo(forca), 
+        op = funcao_atributo(valores)
+        self.forca =        Forca(valor=valores[op], 
                                 modificador= self.raca.modif_forca_base + self.classe.modif_forca_base)
+        valores.pop(op)
         
-        self.destreza =     Destreza(valor=funcao_atributo(self.raca.dado_base), 
+
+        op = funcao_atributo(valores)
+        valores.pop(op)
+        self.destreza =     Destreza(valor=valores[op], 
                                 modificador= self.raca.modif_destreza_base + self.classe.modif_destreza_base)
         
-        self.constituicao = Constituicao(valor=funcao_atributo(self.raca.dado_base), 
+        op = funcao_atributo(valores)
+        valores.pop(op)
+        self.constituicao = Constituicao(valor=valores[op], 
                                 modificador= self.raca.modif_constituicao_base + self.classe.modif_constituicao_base)
         
-        self.inteligencia = Inteligencia(valor=funcao_atributo(self.raca.dado_base), 
+        op = funcao_atributo(valores)
+        valores.pop(op)
+        self.inteligencia = Inteligencia(valor=valores[op], 
                                 modificador= self.raca.modif_inteligencia_base + self.classe.modif_inteligencia_base)
         
-        self.sabedoria =    Sabedoria(valor=funcao_atributo(self.raca.dado_base), 
+        op = funcao_atributo(valores)
+        valores.pop(op)
+        self.sabedoria =    Sabedoria(valor=valores[op], 
                                 modificador= self.raca.modif_sabedoria_base + self.classe.modif_sabedoria_base)
         
-        self.carisma =      Carisma(valor=funcao_atributo(self.raca.dado_base), 
+        op = funcao_atributo(valores)
+        valores.pop(op)
+        self.carisma =      Carisma(valor=valores[op], 
                                 modificador= self.raca.modif_carisma_base + self.classe.modif_carisma_base)
     
         self.pv = self.classe.rolar_base_vida()[0].resultado + self.constituicao.modificador

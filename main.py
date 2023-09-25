@@ -4,13 +4,10 @@ from src.menu_terminal.menu_terminal import *
 menu = Menu_select("Testando")
 
 
-def Escolher_Atributo(dado_base: Dado):
-    
-    dados = dado_base.lancar(4)
-    dados = sorted(dados,key=lambda x: x.resultado)[-4:-1]
-    soma = dados[0] + dados[1] + dados[2]
-    
-    return soma    
+def Escolher_Atributo(opcoes:list):
+    print(opcoes)
+    escolha = menu.options(opcoes)
+    return escolha
     
 
 Victor = Personagem("Victor", Humano(), Guerreiro())
