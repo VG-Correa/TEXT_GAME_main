@@ -1,4 +1,4 @@
-from menu_terminal import Menu_select as ms
+from menu_terminal import menu_terminal as ms
 
 
 # Exemplo de criação do menu
