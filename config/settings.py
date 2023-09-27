@@ -29,9 +29,6 @@ CONFIG_RACAS = {
             }
     }
     
-    
-    
-    
 }
 
 CONFIG_CLASSES = {

@@ -82,3 +82,9 @@ class D12(Dado):
 class D20(Dado):
     def __init__(self):
         super().__init__(20,"D20")
+
+class D100(Dado):
+    def __init__(self):
+        super().__init__(100,"D100")
+        
+
