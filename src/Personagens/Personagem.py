@@ -23,7 +23,7 @@ class Personagem:
             soma = dados[0].resultado + dados[1].resultado + dados[2].resultado
             
             resultado.append(soma)    
-        
+    
         return resultado         
 
     def Start_Personagem(self, funcao_atributo):
@@ -35,7 +35,6 @@ class Personagem:
                                 modificador= self.raca.modif_forca_base + self.classe.modif_forca_base)
         valores.pop(op)
         
-
         op = funcao_atributo(valores)
         valores.pop(op)
         self.destreza =     Destreza(valor=valores[op], 
@@ -63,8 +62,6 @@ class Personagem:
     
         self.pv = self.classe.rolar_base_vida()[0].resultado + self.constituicao.modificador
         
-        pass
-    
     def subir_nivel(self):
         resto = self.experiencia - self.exp_prox_nivel
         
