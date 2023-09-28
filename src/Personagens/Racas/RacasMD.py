@@ -22,5 +22,5 @@ class Abstract_Raca:
       
 class Humano(Abstract_Raca):
     def __init__(self):
-        super().__init__("Humano", D20())
+        super().__init__("Humano", D6())
         
