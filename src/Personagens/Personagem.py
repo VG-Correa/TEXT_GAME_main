@@ -1,34 +1,44 @@
 from src.Personagens.Atributos.AtributosMD import *
 from src.Personagens.Classes.ClassesMD import *
 from src.Personagens.Racas.RacasMD import *
-
-
-class Membro:
-    def __init__(self, nome: str):
-        self.nome = nome
-        self.equipamento = None
-        self.AC = 0 #self.equipamento.AC
+from src.Personagens.Membros import *
+from src.Itens.Equipamentos.AbstractEquipamento import AbstractEquipamento
+from src.Personagens.Habilidades.AbstractHabilidade import *
 
 class Corpo:
     def __init__(self):
-        self.cabeça = None
-        self.torax = None
-        self.bracos = None
-        self.pernas = None
-        self.ombro = None
-        self.pes = None
+        self.cabeça = Cabeca()
+        self.ombro = Ombro()
+        self.torax = Torax()
+        self.bracos = Bracos()
+        self.pernas = Pernas()
+        self.pes = Pes()
+        self.mao_esquerda = Mao_esquerda()
+        self.mao_direita = Mao_direita()
         
-        self.AC = 0 #Decidir como definir esse valor
-
-
+        self.AC = 0
+    
+    def Equipar(self, membro: str, equipamento: AbstractEquipamento):
+        membro = self.__getattribute__(membro).Equipar(equipamento)
+        return membro
 
 class Personagem:
-    def __init__(self, nome, raca:Abstract_Raca, classe:Abstract_Classe):
+    def __init__(self, nome, raca:Abstract_Raca, classe:Abstract_Classe, DROPS:list = []):
         
         self.nome = nome
         self.nivel = 0
         self.experiencia = 0
         self.exp_prox_nivel = 100
+        self.corpo = Corpo()
+        self.habilidades_ataque: [AbstractHabilidade_ataque] = [Soco()]
+        self.habilidades_defesa = []
+        self.itens = []
+        self.fraqueza_elemental = []
+        self.vantagem_elemental = []
+        self.fraqueza_ataque = []
+        self.vantagem_ataque = []
+        
+        self.status_efeito = []
         
         self.raca = raca
         self.classe = classe
@@ -55,6 +65,8 @@ class Personagem:
         
         self.carisma = None
         self.list_atributos.append(self.carisma)
+        
+        self.DROPS = DROPS
         
     def Rolar_base(self) -> list:
         
@@ -104,6 +116,8 @@ class Personagem:
         valores.pop(op)
     
         self.pv = self.classe.rolar_base_vida()[0].resultado + self.constituicao.modificador
+        self.AC = self.raca.modif_AC + self.classe.modif_AC + self.destreza.modificador
+        
         
     def subir_nivel(self):
         resto = self.experiencia - self.exp_prox_nivel
@@ -131,6 +145,47 @@ class Personagem:
         resultado: Rolagem = atributo.testar(DC=dificuldade)
         
         return resultado
+    
+    def Equipar_armadura(self, Equipamento: AbstractEquipamento) -> bool:
+        if Equipamento.tipo == "armadura":
+            equip = self.corpo.Equipar(Equipamento.membro, Equipamento)
+            return equip
+        else:
+            return False
+    
+    def Equipar_mao_esquerda(self, Equipamento: AbstractEquipamento):
+        if Equipamento.tipo == "arma" and Equipamento.membro == "uma_mao":
+            equip = self.corpo.Equipar("mao_esquerda", Equipamento)
+            return equip
+        else:
+            return False
+    
+    def Equipar_mao_direita(self, Equipamento: AbstractEquipamento):
+        if Equipamento.tipo == "uma_mao":
+            self.corpo.Equipar("mao_direita", Equipamento)
+            return True
+        else:
+            return False
+        
+    def Equipar_duas_maos(self, Equipamento: AbstractEquipamento):
+        if Equipamento.tipo == "duas_maos":
+            self.corpo.mao_esquerda.Equipar(Equipamento)
+            self.corpo.mao_direita.Equipar(Equipamento)
+            return True
+        else:
+            return False
+    
+    def Usar_HabilidadeAtaque(self,habilidade_nome:str, mao: str, alvo):
+        
+        for habilidade in self.habilidades_ataque:
+            if habilidade.nome == habilidade_nome:
+                habilidade: AbstractHabilidade_ataque = habilidade
+                
+                arma: AbstractEquipamento = self.corpo.__getattribute__(mao).equipamento
+                if arma != None:
+                    testes = habilidade.Atacar(self, arma, alvo)
+                    return testes
+                
     
     def __str__(self) -> str:
         return self.nome

@@ -14,6 +14,7 @@ class Abstract_Classe:
         self.modif_inteligencia_base = CONFIG_CLASSES[nome]["Modificadores_atributos"]["inteligencia_base"]
         self.modif_sabedoria_base = CONFIG_CLASSES[nome]["Modificadores_atributos"]["sabedoria_base"]
         self.modif_carisma_base = CONFIG_CLASSES[nome]["Modificadores_atributos"]["carisma_base"]
+        self.modif_AC = CONFIG_CLASSES[nome]["Modificadores_atributos"]["AC"]
     
         
         self.prof_armas = []

@@ -1,4 +1,5 @@
 import random
+import math
 
 class Rolagem:
     def __init__(self, nome_dado: str, DC: int=0):
@@ -11,7 +12,11 @@ class Rolagem:
         self.teste = None
     
     def rolar(self, lados: int, modificador: int) -> str:
-        self.rolagem = random.randint(1, lados)
+        if lados > 0:
+            self.rolagem = random.randint(1, lados)
+        else:
+            self.rolagem = 0
+            
         self.modificador = modificador
         
         soma = self.rolagem + self.modificador
@@ -42,7 +47,32 @@ class Rolagem:
             self.teste = True
         else:
             self.teste = False
+    
+    def __add__(self, outra_rolagem):
+        nov_DC = math.floor((self.DC + outra_rolagem.DC)/2)
+        nov_modificador: int = self.modificador + outra_rolagem.modificador
+        nov_resultado: int = self.resultado + outra_rolagem.resultado
+        nov_sobra: int = self.sobra + outra_rolagem.sobra
+        nov_rolagem = self.rolagem + outra_rolagem.rolagem
         
+
+        if nov_resultado >= nov_DC:
+            nov_teste = True
+        else:
+            nov_teste = False
+        
+        Rolagem_nov = Rolagem(nome_dado=f"{self.dado}_+_{outra_rolagem.dado}",DC=nov_DC)
+        Rolagem_nov.modificador = nov_modificador
+        Rolagem_nov.resultado = nov_resultado
+        Rolagem_nov.rolagem = nov_rolagem
+        Rolagem_nov.teste = nov_teste
+        Rolagem_nov.sobra = nov_sobra
+        
+        Rolagem_nov.__setattr__("termo_01", self)
+        Rolagem_nov.__setattr__("termo_02", outra_rolagem)
+        
+        return Rolagem_nov        
+    
     def __str__(self) -> str:
         sinal = "+" if self.modificador >= 0 else ""
         return f"{self.dado:<4}: {self.rolagem:<3}({sinal:}{self.modificador:^3}) = {self.resultado:<3} | {self.sobra:<3}\n --> DC-{self.DC} | Teste: {self.teste}"
@@ -62,6 +92,13 @@ class Dado:
             resultados_rolagens.append(rolagem)
             
         return resultados_rolagens
+
+    def __str__(self):
+        return self.nome
+    
+class D0(Dado):
+    def __init__(self):
+        super().__init__(0,"D0")
 
 class D4(Dado):
     def __init__(self):

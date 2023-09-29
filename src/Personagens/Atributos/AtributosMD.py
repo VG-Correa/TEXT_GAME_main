@@ -5,14 +5,26 @@ class abstract_Atributo:
     
     def __init__(self, nome: str, valor: int, modificador_raca: int, modificador_classe: int):
         
+        self.modificador_raca = modificador_raca
+        self.modificador_classe = modificador_classe
         self.nome = nome
-        self.valor = valor + modificador_raca
-        self.modificador = math.floor(((self.valor - 10) / 2) + modificador_classe)
+        self.valor = valor
+        self.modificador = 0
+        self.Update()
         
         self.dado = D20()   
     
+    def Update(self):
+        self.valor = self.valor + self.modificador_raca
+        self.modificador = math.floor(((self.valor - 10) / 2) + self.modificador_classe)
+    
     def testar(self, qtd: int=1, DC: int=0):
         return D20().lancar(quantidade=qtd, modificador=self.modificador,DC=DC)[0]
+    
+    def add(self):
+        self.valor += 1
+        self.Update()
+        return True
     
     def __str__(self):
         descricao =  f"Atributo: {self.nome}\n----> Valor: {self.valor} | Mod: {self.modificador}"

@@ -16,6 +16,8 @@ class Abstract_Raca:
         self.modif_inteligencia_base = CONFIG_RACAS[nome]["Modificadores_atributos"]["inteligencia_base"]
         self.modif_sabedoria_base = CONFIG_RACAS[nome]["Modificadores_atributos"]["sabedoria_base"]
         self.modif_carisma_base = CONFIG_RACAS[nome]["Modificadores_atributos"]["carisma_base"]
+        self.modif_AC = CONFIG_RACAS[nome]["Modificadores_atributos"]["AC"]
+        
         
         self.prof_armas = []
         self.prof_armaduras = []
@@ -23,4 +25,8 @@ class Abstract_Raca:
 class Humano(Abstract_Raca):
     def __init__(self):
         super().__init__("Humano", D6())
+        
+class Rato(Abstract_Raca):
+    def __init__(self):
+        super().__init__("Rato", D4())
         
