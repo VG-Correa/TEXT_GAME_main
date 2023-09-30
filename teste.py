@@ -18,9 +18,13 @@ Victor.Equipar_mao_esquerda(espada)
 
 print("="*20)
 Rato = Personagem("Rato", Rato(), Guerreiro(), [Espada_Madeira()])
+Rato.fraqueza_ataque.append("fisico")
 Rato.Start_Personagem(return0)
 Rato.Get_descricao_atributos()
 
 print("="*40)
-ataque = Victor.Usar_HabilidadeAtaque("Soco","mao_esquerda",Rato)[0]
+ataque:Rolagem = Victor.Usar_HabilidadeAtaque("Soco","mao_esquerda",Rato)[0]
 print(ataque)
+
+print(Rato.Dar_dano(ataque.resultado,Victor.Get_habilidade_ataque("Soco").tipo_dano,Victor.Get_habilidade_ataque("Soco").tipo_dano))
+print("Vida:", Rato.pv)

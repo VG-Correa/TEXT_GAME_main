@@ -21,5 +21,5 @@ class AbstractHabilidade_ataque:
 
 class Soco(AbstractHabilidade_ataque):
     def __init__(self):
-        super().__init__(nome="Soco", tipo_dano="fisico", dado_base=D20(),atributo_base="forca", qtd_ataques=1)
+        super().__init__(nome="Soco", tipo_dano="fisico", dado_base=D20(),dado_dano_base=D4(),atributo_base="forca", qtd_ataques=1)
         

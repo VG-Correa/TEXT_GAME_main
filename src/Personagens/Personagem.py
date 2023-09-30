@@ -30,7 +30,7 @@ class Personagem:
         self.experiencia = 0
         self.exp_prox_nivel = 100
         self.corpo = Corpo()
-        self.habilidades_ataque: [AbstractHabilidade_ataque] = [Soco()]
+        self.habilidades_ataque: list[AbstractHabilidade_ataque] = [Soco()]
         self.habilidades_defesa = []
         self.itens = []
         self.fraqueza_elemental = []
@@ -118,7 +118,6 @@ class Personagem:
         self.pv = self.classe.rolar_base_vida()[0].resultado + self.constituicao.modificador
         self.AC = self.raca.modif_AC + self.classe.modif_AC + self.destreza.modificador
         
-        
     def subir_nivel(self):
         resto = self.experiencia - self.exp_prox_nivel
         
@@ -175,7 +174,7 @@ class Personagem:
         else:
             return False
     
-    def Usar_HabilidadeAtaque(self,habilidade_nome:str, mao: str, alvo):
+    def Usar_HabilidadeAtaque(self,habilidade_nome:str, mao: str, alvo) -> [Rolagem]:
         
         for habilidade in self.habilidades_ataque:
             if habilidade.nome == habilidade_nome:
@@ -185,7 +184,36 @@ class Personagem:
                 if arma != None:
                     testes = habilidade.Atacar(self, arma, alvo)
                     return testes
-                
+
+    def Get_habilidade_ataque(self, nome: str) -> AbstractHabilidade_ataque:
+        for habilidade in self.habilidades_ataque:
+            if habilidade.nome == nome:
+                return habilidade
+        return False
+    
+    def Get_habilidade_defesa(self, nome: str):
+        for habilidade in self.habilidades_defesa:
+            if habilidade.nome == nome:
+                return habilidade
+        return False
+    
+    def Dar_dano(self, dano: int, elemento: str, tipo_dano: str):
+        
+        
+        if elemento in self.fraqueza_elemental:
+            dano_elemental = math.floor(dano * 0.25)
+        else:
+            dano_elemental = 0
+        if tipo_dano in self.fraqueza_ataque:
+            dano_ataque = math.floor(dano * 0.25)
+        else:
+            dano_ataque = 0
+        dano += dano_elemental
+        dano += dano_ataque
+        
+        self.pv -= dano
+        return dano
+
     
     def __str__(self) -> str:
         return self.nome
