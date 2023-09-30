@@ -23,7 +23,7 @@ class Corpo:
         return membro
 
 class Personagem:
-    def __init__(self, nome, raca:Abstract_Raca, classe:Abstract_Classe, DROPS:list = []):
+    def __init__(self, nome, raca:Abstract_Raca, classe:Abstract_Classe, DROPS_item:list = [], DROPS_equip:list = []):
         
         self.nome = nome
         self.nivel = 0
@@ -66,7 +66,8 @@ class Personagem:
         self.carisma = None
         self.list_atributos.append(self.carisma)
         
-        self.DROPS = DROPS
+        self.DROPS_item: [] = DROPS_item
+        self.DROPS_equip: [AbstractEquipamento]= DROPS_equip
         
     def Rolar_base(self) -> list:
         
@@ -197,7 +198,25 @@ class Personagem:
                 return habilidade
         return False
     
-    def Dar_dano(self, dano: int, elemento: str, tipo_dano: str):
+    def Drop_equip(self):
+        DROPS: list[AbstractEquipamento] = []
+        for drop in self.DROPS_equip:
+            drop: AbstractEquipamento = drop
+            chance = drop.raridade.chance
+            sorteio = random.randint(0,1000)/1000
+            
+            print("DROP:",drop.nome)
+            print("Chance:", chance)
+            print("Sorteio:", sorteio)
+            
+            if chance > sorteio:
+                
+                DROPS.append(drop)
+        
+        return DROPS
+               
+                
+    def Dar_dano(self, dano: int, elemento: str, tipo_dano: str) -> dict:
         
         
         if elemento in self.fraqueza_elemental:
@@ -212,8 +231,15 @@ class Personagem:
         dano += dano_ataque
         
         self.pv -= dano
-        return dano
+        
+        if self.pv <= 0:
+            self.pv = 0
+            return {"Equipamentos": self.Drop_equip(),
+                    "Itens":[]}
+        
+        return {"vida":self.pv,"dano":dano}    
 
+    
     
     def __str__(self) -> str:
         return self.nome
