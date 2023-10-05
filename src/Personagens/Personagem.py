@@ -149,6 +149,7 @@ class Personagem:
     def Equipar_armadura(self, Equipamento: AbstractEquipamento) -> bool:
         if Equipamento.tipo == "armadura":
             equip = self.corpo.Equipar(Equipamento.membro, Equipamento)
+            self.AC += Equipamento.AC
             return equip
         else:
             return False
@@ -156,6 +157,7 @@ class Personagem:
     def Equipar_mao_esquerda(self, Equipamento: AbstractEquipamento):
         if Equipamento.tipo == "arma" and Equipamento.membro == "uma_mao":
             equip = self.corpo.Equipar("mao_esquerda", Equipamento)
+            self.AC += Equipamento.AC
             return equip
         else:
             return False
@@ -163,6 +165,7 @@ class Personagem:
     def Equipar_mao_direita(self, Equipamento: AbstractEquipamento):
         if Equipamento.tipo == "uma_mao":
             self.corpo.Equipar("mao_direita", Equipamento)
+            self.AC += Equipamento.AC
             return True
         else:
             return False
@@ -171,6 +174,7 @@ class Personagem:
         if Equipamento.tipo == "duas_maos":
             self.corpo.mao_esquerda.Equipar(Equipamento)
             self.corpo.mao_direita.Equipar(Equipamento)
+            self.AC += Equipamento.AC
             return True
         else:
             return False
@@ -215,9 +219,8 @@ class Personagem:
         
         return DROPS
                
-                
     def Dar_dano(self, dano: int, elemento: str, tipo_dano: str) -> dict:
-        
+        dano = dano
         
         if elemento in self.fraqueza_elemental:
             dano_elemental = math.floor(dano * 0.25)
@@ -227,6 +230,7 @@ class Personagem:
             dano_ataque = math.floor(dano * 0.25)
         else:
             dano_ataque = 0
+        
         dano += dano_elemental
         dano += dano_ataque
         

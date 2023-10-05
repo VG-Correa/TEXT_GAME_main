@@ -14,7 +14,7 @@ class AbstractEquipamento:
                  radidade: AbstractRaridade, 
                  encantamento: AbstractEncantamento=None,
                  auto_encantamento: bool = False,
-                 pool_encantamentos: list[AbstractEncantamento] | None = None
+                 pool_encantamentos = None
                  ):
         
         self.nome = nome

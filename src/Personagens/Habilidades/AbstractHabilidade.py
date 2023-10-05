@@ -12,12 +12,15 @@ class AbstractHabilidade_ataque:
         self.qtd_ataques = qtd_ataques
     
     def Atacar(self, Ator, equipamento: AbstractEquipamento,  alvo):
-        mod_forca: abstract_Atributo = Ator.__getattribute__(self.atributo_base)
-        rolagens: [Rolagem] = self.dado_base.lancar(self.qtd_ataques, DC=alvo.AC,modificador=mod_forca.modificador)
+        atributo: abstract_Atributo = Ator.__getattribute__(self.atributo_base)
+        mod_equipamento = equipamento.dado.lancar(1)[0].resultado
+        rolagens: [Rolagem] = self.dado_base.lancar(self.qtd_ataques, DC=alvo.AC,modificador=atributo.modificador + mod_equipamento)
         return rolagens
     
-    def Dano(self):
-        return self.dado_dano_base.lancar(1)
+    def Dano(self, Ator, equipamento: AbstractEquipamento=None):
+        atributo: abstract_Atributo = Ator.__getattribute__(self.atributo_base)
+        mod_equipamento = equipamento.dado.lancar(1)[0].resultado
+        return self.dado_dano_base.lancar(1, modificador=atributo.modificador + mod_equipamento)
 
 class Soco(AbstractHabilidade_ataque):
     def __init__(self):

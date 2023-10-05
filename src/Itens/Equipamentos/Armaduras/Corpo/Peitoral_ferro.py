@@ -6,4 +6,4 @@ from src.Itens.Equipamentos.Encantamentos.Aspecto_flamejante import Aspecto_Flam
 
 class Peitoral_Ferro(AbstractEquipamento):
     def __init__(self):
-        super().__init__("Peitoral de Ferro", "armadura", "torax", D6(), 5, Normal(),auto_encantamento=True,pool_encantamentos=[Normal, Aspecto_FlamejanteI])
+        super().__init__("Peitoral de Ferro", "armadura", "torax", D6(), 2, Normal(),auto_encantamento=True,pool_encantamentos=[Normal, Aspecto_FlamejanteI])
